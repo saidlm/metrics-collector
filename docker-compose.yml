@@ -1,0 +1,74 @@
+services:
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Prague
+      - URL=yourdomain.url
+      - VALIDATION=http
+      - SUBDOMAINS=telegraf
+      - ONLY_SUBDOMAINS=true
+      #- EMAIL=
+    volumes:
+      - swang:/config
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
+
+  telegraf-twamp:
+    image: telegraf:latest
+    container_name: telegraf-twamp
+    hostname: telegraf-twamp
+    environment:
+      - CONFIG=twamp.conf
+    volumes:
+      - telegraf_var:/opt/telegraf/var
+      - telegraf_etc:/opt/telegraf/etc:ro
+    restart: unless-stopped
+
+  telegraf-mtr:
+    image: telegraf:latest
+    container_name: telegraf-mtr
+    hostname: telegraf-mtr
+    environment:
+      - CONFIG=mtr.conf
+    volumes:
+      - telegraf_var:/opt/telegraf/var
+      - telegraf_etc:/opt/telegraf/etc:ro
+    restart: unless-stopped
+
+  telegraf-atlas:
+    image: telegraf:latest
+    container_name: telegraf-atlas
+    hostname: telegraf-atlas
+    environment:
+      - CONFIG=atlas.conf
+    volumes:
+      - telegraf_var:/opt/telegraf/var
+      - telegraf_etc:/opt/telegraf/etc:ro
+    restart: unless-stopped
+
+volumes:
+  swang:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ..../swang-config
+  telegraf_var:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: .../telegraf-var
+  telegraf_etc:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: .../telegraf-congig
