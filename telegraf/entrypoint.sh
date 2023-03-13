@@ -15,10 +15,8 @@ if [ "${1:0:1}" = '-' ]; then
     set -- telegraf "$@"
 fi
 
-set "$@" --config /opt/telegraf/etc/$CONFIG
+set -- "$@" --config /opt/telegraf/etc/$CONFIG
 echo "Starting command: $@"
-
-ls -lsa /opt/telegraf/var
 
 if [ "$(id -u)" -ne 0 ]; then
     exec "$@"

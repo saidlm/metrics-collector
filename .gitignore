@@ -1,4 +1,3 @@
 docker-baseimage-alpine/
 docker-baseimage-alpine-nginx/
 docker-swag/
-volume-etc/
