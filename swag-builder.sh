@@ -30,7 +30,7 @@ echo "Processing NGINX base image."
 echo "Processing SWANG."
 (git -C ./docker-swag/ pull || git clone https://github.com/linuxserver/docker-swag.git ./docker-swag) && \
 	cat ./docker-swag/$DOCKERFILE | sed -e "s/^FROM.*/FROM baseimage-alpine-nginx:latest/" > ./docker-swag/$DOCKERFILE.edited && \
-	docker build ./docker-swag -f ./docker-swag/$DOCKERFILE.edited -t swang:latest -t swang:$TAG --no-cache
+	docker build ./docker-swag -f ./docker-swag/$DOCKERFILE.edited -t swag:latest -t swag:$TAG --no-cache
 
 echo "Done."
 
