@@ -20,17 +20,17 @@ echo "Clonning repositories from git and building images."
 
 echo "Processing alpine baseimage."
 (git -C ./docker-baseimage-alpine pull || git clone https://github.com/linuxserver/docker-baseimage-alpine.git ./docker-baseimage-alpine) && \
-	docker build ./docker-baseimage-alpine -f ./docker-baseimage-alpine/$DOCKERFILE -t baseimage-alpine:latest -t baseimage-alpine:$TAG --no-cache
+	docker build ./docker-baseimage-alpine -f ./docker-baseimage-alpine/$DOCKERFILE -t mc-baseimage-alpine:latest -t mc-baseimage-alpine:$TAG --no-cache
 
 echo "Processing NGINX base image."
 (git -C ./docker-baseimage-alpine-nginx pull || git clone https://github.com/linuxserver/docker-baseimage-alpine-nginx.git ./docker-baseimage-alpine-nginx) && \
-	cat ./docker-baseimage-alpine-nginx/$DOCKERFILE | sed -e "s/^FROM.*/FROM baseimage-alpine:latest/" > ./docker-baseimage-alpine-nginx/$DOCKERFILE.edited && \
-	docker build ./docker-baseimage-alpine-nginx -f ./docker-baseimage-alpine-nginx/$DOCKERFILE.edited -t baseimage-alpine-nginx:latest -t baseimage-alpine-nginx:$TAG --no-cache
+	cat ./docker-baseimage-alpine-nginx/$DOCKERFILE | sed -e "s/^FROM.*/FROM mc-baseimage-alpine:latest/" > ./docker-baseimage-alpine-nginx/$DOCKERFILE.edited && \
+	docker build ./docker-baseimage-alpine-nginx -f ./docker-baseimage-alpine-nginx/$DOCKERFILE.edited -t mc-baseimage-alpine-nginx:latest -t mc-baseimage-alpine-nginx:$TAG --no-cache
 
 echo "Processing SWANG."
 (git -C ./docker-swag/ pull || git clone https://github.com/linuxserver/docker-swag.git ./docker-swag) && \
-	cat ./docker-swag/$DOCKERFILE | sed -e "s/^FROM.*/FROM baseimage-alpine-nginx:latest/" > ./docker-swag/$DOCKERFILE.edited && \
-	docker build ./docker-swag -f ./docker-swag/$DOCKERFILE.edited -t swag:latest -t swag:$TAG --no-cache
+	cat ./docker-swag/$DOCKERFILE | sed -e "s/^FROM.*/FROM mc-baseimage-alpine-nginx:latest/" > ./docker-swag/$DOCKERFILE.edited && \
+	docker build ./docker-swag -f ./docker-swag/$DOCKERFILE.edited -t mc-swag:latest -t mc-swag:$TAG --no-cache
 
 echo "Done."
 

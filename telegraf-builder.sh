@@ -17,4 +17,4 @@ else
 fi
 
 echo "Building telegraf image."
-docker build ./telegraf -f ./telegraf/$DOCKERFILE -t telegraf:latest -t telegraf:$TAG
+docker build ./telegraf -f ./telegraf/$DOCKERFILE -t mc-telegraf:latest -t mc-telegraf:$TAG

@@ -1,6 +1,6 @@
 services:
   swag:
-    image: swag:latest
+    image: mc-swag:latest
     container_name: swag
     hostname: swag
     cap_add:
@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
 
   telegraf-sdwan-twamp:
-    image: telegraf:latest
+    image: mc-telegraf:latest
     container_name: telegraf-sdwan-twamp
     hostname: telegraf-sdwan-twamp
     environment:
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
   telegraf-sdwan-mtr:
-    image: telegraf:latest
+    image: mc-telegraf:latest
     container_name: telegraf-sdwan-mtr
     hostname: telegraf-sdwan-mtr
     environment:
@@ -44,7 +44,7 @@ services:
     restart: unless-stopped
 
   telegraf-tier1-twamp:
-    image: telegraf:latest
+    image: mc-telegraf:latest
     container_name: telegraf-tier1-twamp
     hostname: telegraf-tier1-twamp
     environment:
@@ -55,7 +55,7 @@ services:
     restart: unless-stopped
 
   telegraf-tier1-mtr:
-    image: telegraf:latest
+    image: mc-telegraf:latest
     container_name: telegraf-tier1-mtr
     hostname: telegraf-tier1-mtr
     environment:
@@ -66,7 +66,7 @@ services:
     restart: unless-stopped
 
   telegraf-atlas:
-    image: telegraf:latest
+    image: mc-telegraf:latest
     container_name: telegraf-atlas
     hostname: telegraf-atlas
     environment:
