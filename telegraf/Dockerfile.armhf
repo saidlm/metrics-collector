@@ -32,7 +32,7 @@ RUN set -ex && \
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod +x /sbin/entrypoint.sh
 
-VOLUME ["/opt/telegraf/etc", "/oprt/telegraf/var"]
+VOLUME ["/opt/telegraf/etc", "/opt/telegraf/var"]
 EXPOSE 8094
 
 ENTRYPOINT ["/sbin/entrypoint.sh"]
