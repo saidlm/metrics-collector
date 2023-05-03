@@ -1,8 +1,8 @@
 services:
   swag:
     image: mc-swag:latest
-    container_name: swag
-    hostname: swag
+    container_name: mc-swag
+    hostname: mc-swag
     cap_add:
       - NET_ADMIN
     environment:
@@ -19,6 +19,19 @@ services:
     ports:
       - 443:443
       - 80:80
+    restart: unless-stopped
+  sshd:
+    image: mc-sshd:latest
+    container_name: sshd
+    hostname: sshd
+    environment:
+      # Username and sshd configuration is a part of build script
+      - PASS=Test1234!
+      #- PUBKEY=      
+    volumes:
+      - telegraf_var:/opt/telegraf/var
+    ports:
+      - 2222:22
     restart: unless-stopped
 
   telegraf-sdwan-twamp:

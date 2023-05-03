@@ -7,7 +7,7 @@ export DOCKER_BUILDKIT=1
 TAG=`date +%Y.%m.%d`
 
 # Discover architecture
-echo -n "Deiscovering architecture ... "
+echo -n "Discovering architecture ... "
 if [[ $(uname -a | grep -i arm) ]]; then
         echo "arm."
         DOCKERFILE="Dockerfile.armhf"
