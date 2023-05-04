@@ -1,8 +1,20 @@
 services:
+  control:
+    image: alpine:3.17
+    container_name: control
+    hostname: control
+    command: "/config/config_creator.sh"
+    volumes:
+      - telegraf_etc:/telegraf
+      - swag:/swag
+      - ./config:/config:ro
+
   swag:
     image: mc-swag:latest
-    container_name: mc-swag
-    hostname: mc-swag
+    container_name: swag
+    hostname: swag
+    depends_on:
+      - control
     cap_add:
       - NET_ADMIN
     environment:
@@ -20,10 +32,13 @@ services:
       - 443:443
       - 80:80
     restart: unless-stopped
+
   sshd:
     image: mc-sshd:latest
     container_name: sshd
     hostname: sshd
+    depends_on:
+      - control
     environment:
       # Username and sshd configuration is a part of build script
       - PASS=Test1234!
@@ -38,6 +53,8 @@ services:
     image: mc-telegraf:latest
     container_name: telegraf-sdwan-twamp
     hostname: telegraf-sdwan-twamp
+    depends_on:
+      - control
     environment:
       - CONFIG=sdwan-twamp.conf
     volumes:
@@ -49,6 +66,8 @@ services:
     image: mc-telegraf:latest
     container_name: telegraf-sdwan-mtr
     hostname: telegraf-sdwan-mtr
+    depends_on:
+      - control
     environment:
       - CONFIG=sdwan-mtr.conf
     volumes:
@@ -60,6 +79,8 @@ services:
     image: mc-telegraf:latest
     container_name: telegraf-tier1-twamp
     hostname: telegraf-tier1-twamp
+    depends_on:
+      - control
     environment:
       - CONFIG=tier1-twamp.conf
     volumes:
@@ -71,6 +92,8 @@ services:
     image: mc-telegraf:latest
     container_name: telegraf-tier1-mtr
     hostname: telegraf-tier1-mtr
+    depends_on:
+      - control
     environment:
       - CONFIG=tier1-mtr.conf
     volumes:
@@ -82,6 +105,8 @@ services:
     image: mc-telegraf:latest
     container_name: telegraf-atlas
     hostname: telegraf-atlas
+    depends_on:
+      - control
     environment:
       - CONFIG=atlas.conf
     volumes:
