@@ -8,12 +8,13 @@ ENV PASS=NO_PASS
 RUN apk add --update --no-cache openssh
 
 RUN echo 'hosts: files dns' >> /etc/nsswitch.conf && \
-    adduser -h /$USER -s /bin/sh -D $USER && \
+    addgroup -S $USER && \
+    adduser -h /$USER -s /bin/sh -G $USER -S $USER && \
     passwd -u $USER && \
     mkdir -p /$USER/.ssh && \
     chmod 0700 /$USER/.ssh && \
     ssh-keygen -A && \
-    echo -e "PasswordAuthentication $PASSWDAUTH" >> /etc/ssh/sshd_config 
+    echo -e "PasswordAuthentication $PASSWDAUTH" >> /etc/ssh/sshd_config
 
 WORKDIR /$USER
 
@@ -23,3 +24,4 @@ COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod +x /sbin/entrypoint.sh
 
 ENTRYPOINT ["/sbin/entrypoint.sh"]
+
